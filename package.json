@@ -1,0 +1,26 @@
+{
+  "name": "rp-voting-app",
+  "version": "1.0.0",
+  "description": "FCC�'s Voting App project",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon -e css,ejs,js,json --watch app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RamiroPinol/voting-app.git"
+  },
+  "author": "Ramiro Pinol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RamiroPinol/voting-app/issues"
+  },
+  "homepage": "https://github.com/RamiroPinol/voting-app#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.14.0"
+  }
+}
