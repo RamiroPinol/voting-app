@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   let data = req.app.get('appData')
 
   // test con wense (users[0])
-  const wense = data.users[0]
+  const wense = data.users[1]
   const firstPool = wense.pools[0]
 
   const userName = wense.user_name
