@@ -1,12 +1,31 @@
 var express = require('express');
-var reload = require('C:/Users/Ramiro/AppData/Roaming/npm/node_modules/reload');
+var reload = require('reload');
 var app = express();
 var dataFile = require('./data/data.json');
 
 app.set('port', process.env.PORT || 3000 );
+app.set('appData', dataFile);
+app.set('view engine', 'ejs');
+app.set('views', 'app/views');
 
-app.get('/', function (req, res) {
-  res.send(JSON.stringify(dataFile.users[1].user_name))
+app.get('/', (req, res) => {
+  let data = req.app.get('appData')
+
+  // test con wense (users[0])
+  const wense = data.users[0]
+  const firstPool = wense.pools[0]
+
+  const userName = wense.user_name
+  const poolName = firstPool.pool_name
+  const opt1 = firstPool.options.opt1
+  const opt2 = firstPool.options.opt2
+
+  res.render("index", {
+    userName: userName,
+    poolName: poolName,
+    opt1: opt1,
+    opt2: opt2
+  })
 })
 
 var server = app.listen(app.get('port'), () => {
@@ -14,3 +33,5 @@ var server = app.listen(app.get('port'), () => {
 });
 
 reload(server, app);
+
+//<script src="/reload/reload.js"></script>

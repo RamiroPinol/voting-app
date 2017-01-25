@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RP Voting App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./public/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="poolDiv .col-sx-12 .com-md-6 panel panel-primary">
+
+        <div class="panel-heading">
+          <p id="userName"> <%= userName %> </p>
+          <h2 id="poolName"> <%= poolName %> </h2>
+        </div>
+
+        <div class="panel-body">
+          <ul>
+            <li> <%= opt1 %> </li>
+            <li> <%= opt2 %> </li>
+          </ul>
+        </div>
+
+        <div class="panel-footer">
+          <button type="button" name="button">VOTE</button>
+        </div>
+
+      </div>
+    </div>
+  </body>
+  <script src="/reload/reload.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</html>

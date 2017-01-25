@@ -6,8 +6,8 @@
       "pool_id" : 0,
       "pool_name" : "Mejor Club de San José",
       "options" : {
-        "1" : "San José",
-        "2" : "Santa Rosa",
+        "opt1" : "San José",
+        "opt2" : "Santa Rosa",
         "vot1" : 0,
         "vot2" : 0
         }
@@ -16,9 +16,9 @@
         "pool_id" : 1,
         "pool_name" : "Mejor brevaje",
         "options" : {
-          "1" : "Vino con coca",
-          "2" : "Cerveza",
-          "3" : "Fernet con coca",
+          "opt1" : "Vino con coca",
+          "opt2" : "Cerveza",
+          "opt3" : "Fernet con coca",
           "vot1" : 0,
           "vot2" : 0,
           "vot3" : 0
@@ -28,9 +28,9 @@
         "pool_id" : 2,
         "pool_name" : "Mejor esparcimiento nocturno",
         "options" : {
-          "1" : "Mamá Cora",
-          "2" : "Alta Vista",
-          "3" : "El bar de peca",
+          "opt1" : "Mamá Cora",
+          "opt2" : "Alta Vista",
+          "opt3" : "El bar de peca",
           "vot1" : 0,
           "vot2" : 0,
           "vot3" : 0
@@ -43,8 +43,8 @@
       "pool_id" : 0,
       "pool_name" : "Mejor camiseta de sanjo",
       "options" : {
-        "1" : "Titular 2014",
-        "2" : "Titular 2015",
+        "opt1" : "Titular 2014",
+        "opt2" : "Titular 2015",
         "vot1" : 0,
         "vot2" : 0
         }
@@ -53,9 +53,9 @@
         "pool_id" : 1,
         "pool_name" : "Mejor banda",
         "options" : {
-          "1" : "GNR",
-          "2" : "Pala Ancha",
-          "3" : "Lucas Sugo",
+          "opt1" : "GNR",
+          "opt2" : "Pala Ancha",
+          "opt3" : "Lucas Sugo",
           "vot1" : 0,
           "vot2" : 0,
           "vot3" : 0
@@ -65,9 +65,9 @@
         "pool_id" : 2,
         "pool_name" : "Mejor esquina de San José",
         "options" : {
-          "1" : "Mamá Cora",
-          "2" : "CSyDSJ",
-          "3" : "SC",
+          "opt1" : "Mamá Cora",
+          "opt2" : "CSyDSJ",
+          "opt3" : "SC",
           "vot1" : 0,
           "vot2" : 0,
           "vot3" : 0

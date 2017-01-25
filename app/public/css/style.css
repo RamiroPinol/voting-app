@@ -1,0 +1,14 @@
+* {
+  text-align: center;
+}
+body {
+  padding-top: 50px;
+}
+.panel-heading p {
+  text-align: left;
+  margin: 0;
+}
+
+.panel-heading h2 {
+  margin: 10px;
+}
