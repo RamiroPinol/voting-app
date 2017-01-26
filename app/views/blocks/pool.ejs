@@ -8,8 +8,9 @@
 
     <div class="panel-body">
       <ul>
-        <li> <%= opt1 %> </li>
-        <li> <%= opt2 %> </li>
+      <% for(var i=0; i<options.length; i++) {%>
+      <li><%= options[i] %></li>
+      <% } %>
       </ul>
     </div>
 

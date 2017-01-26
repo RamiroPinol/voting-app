@@ -2,6 +2,7 @@ var express = require('express');
 var reload = require('reload');
 var app = express();
 var dataFile = require('./data/data.json');
+var Pool = require('./public/js/getPool');
 
 app.set('port', process.env.PORT || 3000 );
 app.set('appData', dataFile);
@@ -11,20 +12,14 @@ app.set('views', 'app/views');
 app.get('/', (req, res) => {
   let data = req.app.get('appData')
 
-  // test con wense (users[0])
-  const wense = data.users[1]
-  const firstPool = wense.pools[0]
-
-  const userName = wense.user_name
-  const poolName = firstPool.pool_name
-  const opt1 = firstPool.options.opt1
-  const opt2 = firstPool.options.opt2
+  const newPool = new Pool()
+  const pool = newPool.getPool(data, 123, 2)
+  const options = newPool.getOptions(pool[2])
 
   res.render("index", {
-    userName: userName,
-    poolName: poolName,
-    opt1: opt1,
-    opt2: opt2
+    userName: pool[0].userName,
+    poolName: pool[1].poolName,
+    options: options
   })
 })
 
