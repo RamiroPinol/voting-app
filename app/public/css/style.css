@@ -2,7 +2,6 @@
   text-align: center;
 }
 body {
-  padding-top: 50px;
 }
 .panel-heading p {
   text-align: left;
@@ -11,4 +10,20 @@ body {
 
 .panel-heading h2 {
   margin: 10px;
+}
+
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* Custom default button */
+.btn-default,
+.btn-default:hover,
+.btn-default:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: 1px solid #fff;
 }
