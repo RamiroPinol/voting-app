@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/RamiroPinol/voting-app#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "mongodb": "^2.2.22"
   },
   "devDependencies": {
     "eslint": "^3.14.0"
