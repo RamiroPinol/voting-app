@@ -2,9 +2,9 @@
   "users": [{
     "user_id" : 123,
     "user_name" : "Wense",
-    "pools" : [{
-      "pool_id" : 0,
-      "pool_name" : "Mejor Club de San José",
+    "polls" : [{
+      "poll_id" : 0,
+      "poll_name" : "Mejor Club de San José",
       "options" : {
         "opt1" : "San José",
         "opt2" : "Santa Rosa",
@@ -13,8 +13,8 @@
         }
       },
       {
-        "pool_id" : 1,
-        "pool_name" : "Mejor brevaje",
+        "poll_id" : 1,
+        "poll_name" : "Mejor brevaje",
         "options" : {
           "opt1" : "Vino con coca",
           "opt2" : "Cerveza",
@@ -25,8 +25,8 @@
         }
       },
       {
-        "pool_id" : 2,
-        "pool_name" : "Mejor esparcimiento nocturno",
+        "poll_id" : 2,
+        "poll_name" : "Mejor esparcimiento nocturno",
         "options" : {
           "opt1" : "Mamá Cora",
           "opt2" : "Alta Vista",
@@ -39,9 +39,9 @@
   },{
     "user_id" : 456,
     "user_name" : "Panza",
-    "pools" : [{
-      "pool_id" : 0,
-      "pool_name" : "Mejor camiseta de sanjo",
+    "polls" : [{
+      "poll_id" : 0,
+      "poll_name" : "Mejor camiseta de sanjo",
       "options" : {
         "opt1" : "Titular 2014",
         "opt2" : "Titular 2015",
@@ -50,8 +50,8 @@
         }
       },
       {
-        "pool_id" : 1,
-        "pool_name" : "Mejor banda",
+        "poll_id" : 1,
+        "poll_name" : "Mejor banda",
         "options" : {
           "opt1" : "GNR",
           "opt2" : "Pala Ancha",
@@ -62,8 +62,8 @@
         }
       },
       {
-        "pool_id" : 2,
-        "pool_name" : "Mejor esquina de San José",
+        "poll_id" : 2,
+        "poll_name" : "Mejor esquina de San José",
         "options" : {
           "opt1" : "Mamá Cora",
           "opt2" : "CSyDSJ",
