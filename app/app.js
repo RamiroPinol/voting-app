@@ -16,7 +16,7 @@ const auth = require('./lib/auth');
 const configDB = require('./lib/database');
 mongoose.connect(configDB.url);
 
-require('./lib/passport')(passport);
+//require('./lib/passport')(passport);
 
 app.set('port', process.env.PORT || 3000 );
 app.set('appData', dataFile);
@@ -28,7 +28,6 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('app/public'));
-app.use(require('./routes/index'));
 app.use(require('./routes/newPoll'));
 //app.use(require('./routes/login'));
 
@@ -37,6 +36,8 @@ app.use(session({ secret: 'stop!youshouldnotreadthisbecauseisasecret' })); // se
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+require('./routes/routes.js')(app, passport);
 
 var server = app.listen(app.get('port'), () => {
   console.log('Listening on port ' + app.get('port'));
