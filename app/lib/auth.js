@@ -1,39 +1,21 @@
-const mongo = require('mongodb').MongoClient
-const ObjectID = require('mongodb').ObjectID
-const LocalStrategy = require('passport-local');
-const session = require('express-session');
-const passport = require('passport');
+module.exports = {
 
-module.exports = function (app, db) {
+  'facebookAuth' : {
+    'clientID'      : '391008777930174',
+    'clientSecret'  : '3fc71e7ab6e0956d32979b9c75349aa2',
+    'callbackURL'   : 'http://localhost:3000/auth/facebook/callback'
+  },
 
-  app.use(session({
-    secret: "BNSBDFba6sdna6xfas89nRVAoi",
-    resave: true,
-    saveUninitialized: true,
-  }));
+  'twitterAuth' : {
+    'consumerKey'       : 'GM61lAfyvMxpItno1adE8UtQ7',
+    'consumerSecret'    : '3UrjdhNEAD1kctXbBsjjMMtoKQSyPxS8nisaaFyx7jhDSzkUQd',
+    'callbackURL'       : 'http://localhost:3000/auth/twitter/callback'
+  },
 
-  app.use(passport.initialize())
-  app.use(passport.session())
+  'googleAuth' : {
+    'clientID'      : '391993236540-dl6u7n7btlbfr2fsccs0jtrumm0vefhe.apps.googleusercontent.com',
+    'clientSecret'  : 'AGFHWUEeAcFQSXgCMAj0meTu',
+    'callbackURL'   : 'http://localhost:3000/auth/google/callback'
+  }
 
-  passport.serializeUser( (user, done) => {
-    done(null, user._id);
-  });
-
-  passport.deserializeUser( (id, done) => {
-    db.collection('users').findOne( {_id: new ObjectID(id) }, (err, doc) => {
-      done(null, doc);
-    });
-  });
-
-  passport.use( new LocalStrategy (
-    function(username, password, done) {
-      db.collection('users').findOne({ username: username }, function (err, user) {
-        console.log('User '+ username +' attempted to log in.');
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (password !== user.password) { return done(null, false); }
-        return done(null, user);
-      });
-    }
-  ));
-}
+};
