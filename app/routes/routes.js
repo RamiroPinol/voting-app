@@ -13,14 +13,12 @@ module.exports = function(app, passport) {
     });
   });
 
-/*
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
     successRedirect : '/profile',
     failureRedirect : '/login',
     failureFlash : true
   }));
-  */
 
   app.get('/signup', function(req, res) {
     res.render('signup.ejs', {
@@ -31,14 +29,12 @@ module.exports = function(app, passport) {
     });
   });
 
-/*
   // process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect : '/profile',
     failureRedirect : '/signup',
     failureFlash : true // allow flash messages
   }));
-  */
 
   app.get('/profile', isLoggedIn, function(req, res) {
     res.render('profile.ejs', {

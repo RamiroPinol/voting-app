@@ -10,13 +10,12 @@ const bodyParser = require('body-parser');
 
 const dataFile = require('./data/data.json');
 const poll = require('./getPoll');
-const login = require('./routes/login');
 const auth = require('./lib/auth');
 
 const configDB = require('./lib/database');
 mongoose.connect(configDB.url);
 
-//require('./lib/passport')(passport);
+require('./lib/passport')(passport);
 
 app.set('port', process.env.PORT || 3000 );
 app.set('appData', dataFile);
@@ -29,7 +28,6 @@ app.use(bodyParser()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('app/public'));
 app.use(require('./routes/newPoll'));
-//app.use(require('./routes/login'));
 
 // required for passport
 app.use(session({ secret: 'stop!youshouldnotreadthisbecauseisasecret' })); // session secret
