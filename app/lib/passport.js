@@ -30,28 +30,42 @@ module.exports = (passport) => {
     // User.findOne wont fire unless data is sent back
     process.nextTick( () => {
 
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-      User.findOne({ 'local.email' :  email }, (err, user) => {
-        if (err)
-          return done(err);
+      if (!req.user) {
 
-        // check to see if theres already a user with that email
-        if (user) {
-          return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-        } else {
+      // find a user whose email is the same as the forms email
+      // we are checking to see if the user trying to login already exists
+        User.findOne({ 'local.email' :  email }, (err, user) => {
+          if (err)
+            return done(err);
 
-          // if no user with that email, create new user
-          const newUser = new User();
-          newUser.local.email    = email;
-          newUser.local.password = newUser.generateHash(password);
+          // check to see if theres already a user with that email
+          if (user) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          } else {
 
-          newUser.save( (err) => {
-            if (err) throw err;
-            return done(null, newUser);
-          });
-        }
-      });
+            // if no user with that email, create new user
+            const newUser = new User();
+            newUser.local.email    = email;
+            newUser.local.password = newUser.generateHash(password);
+
+            newUser.save( (err) => {
+              if (err) throw err;
+              return done(null, newUser);
+            });
+          }
+        });
+
+      } else {
+        const user = req.user;
+        user.local.email    = email;
+        user.local.password = user.generateHash(password);
+
+        user.save( (err) => {
+          if (err) throw err;
+          return done(null, user);
+        });
+
+      }
 
     });
 
@@ -253,7 +267,7 @@ module.exports = (passport) => {
 
   },
 
-  function(token, refreshToken, profile, done) {
+  function(req, token, refreshToken, profile, done) {
 
     process.nextTick(function() {
 
