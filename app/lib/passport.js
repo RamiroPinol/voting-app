@@ -90,45 +90,66 @@ module.exports = (passport) => {
     // pull in our app id and secret from our auth.js file
     clientID        : configAuth.facebookAuth.clientID,
     clientSecret    : configAuth.facebookAuth.clientSecret,
-    callbackURL     : configAuth.facebookAuth.callbackURL
+    callbackURL     : configAuth.facebookAuth.callbackURL,
+    // allows us to pass in the req from our route (to check if user is logged in)
+    passReqToCallback : true
 
   },
 
   // facebook will send back the token and profile
-  function(token, refreshToken, profile, done) {
+  function(req, token, refreshToken, profile, done) {
 
     process.nextTick(function() {
 
-      // find the user in the database based on their facebook id
-      User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
+      if ( !req.user ) { // Check if user is logged in
 
-        // if there is an error, stop everything and return that
-        // ie an error connecting to the database
-        if (err)
-          return done(err);
+        // find the user in the database based on their facebook id
+        User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
 
-        // if the user is found, then log them in
-        if (user) {
-          return done(null, user); // user found, return that user
-        } else {
-          // if there is no user found with that facebook id, create them
-          var newUser = new User();
+          // if there is an error, stop everything and return that
+          if (err)
+            return done(err);
 
-          // set all of the facebook information in our user model
-          newUser.facebook.id    = profile.id; // set the users facebook id
-          newUser.facebook.token = token; // we will save the token that facebook provides to the user
-          newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
-          newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+          // if the user is found, then log them in
+          if (user) {
+            return done(null, user); // user found, return that user
+          } else {
+            // if there is no user found with that facebook id, create them
+            var newUser = new User();
 
-          // save our user to the database
-          newUser.save(function(err) {
-            if (err) throw err;
+            // set all of the facebook information in our user model
+            newUser.facebook.id    = profile.id; // set the users facebook id
+            newUser.facebook.token = token; // we will save the token that facebook provides to the user
+            newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
+            newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
 
-            return done(null, newUser);
-          });
-        }
+            // save our user to the database
+            newUser.save(function(err) {
+              if (err) throw err;
 
-      });
+              return done(null, newUser);
+            });
+          }
+
+        });
+
+      } else {
+        // user already exists and is logged in, we have to link accounts
+        const user = req.user; // pull the user out of the session
+
+        // update the current users facebook credentials
+        user.facebook.id    = profile.id;
+        user.facebook.token = token;
+        user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+        user.facebook.email = profile.emails[0].value;
+
+        // save the user
+        user.save(function(err) {
+          if (err)
+            throw err;
+          return done(null, user);
+        });
+      }
     });
   }));
 
@@ -136,47 +157,59 @@ module.exports = (passport) => {
 
   passport.use(new TwitterStrategy({
 
-    // pull in our app id and secret from our auth.js file
     consumerKey     : configAuth.twitterAuth.consumerKey,
     consumerSecret  : configAuth.twitterAuth.consumerSecret,
-    callbackURL     : configAuth.twitterAuth.callbackURL
+    callbackURL     : configAuth.twitterAuth.callbackURL,
+    passReqToCallback : true
 
   },
 
-  function(token, refreshToken, profile, done) {
+  function(req, token, refreshToken, profile, done) {
 
     process.nextTick(function() {
 
-      // find the user in the database based on their twitter id
-      User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
+      if ( !req.user ) {
 
-        // if there is an error, stop everything and return that
-        // ie an error connecting to the database
-        if (err)
-          return done(err);
+        User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
 
-        // if the user is found, then log them in
-        if (user) {
-          return done(null, user); // user found, return that user
-        } else {
-          // if there is no user found with that twitter id, create them
-          var newUser = new User();
+          if (err)
+            return done(err);
 
-          // set all of the twitter information in our user model
-          newUser.twitter.id    = profile.id; // set the users twitter id
-          newUser.twitter.token = token; // we will save the token that twitter provides to the user
-          newUser.twitter.displayName  = profile.displayName; // look at the passport user profile to see how names are returned
-          newUser.twitter.username = profile.username; // twitter can return multiple emails so we'll take the first
+          if (user) {
+            return done(null, user);
 
-          // save our user to the database
-          newUser.save(function(err) {
-            if (err) throw err;
+          } else {
+            var newUser = new User();
 
-            return done(null, newUser);
-          });
-        }
+            newUser.twitter.id    = profile.id;
+            newUser.twitter.token = token;
+            newUser.twitter.displayName  = profile.displayName;
+            newUser.twitter.username = profile.username;
 
-      });
+            newUser.save(function(err) {
+              if (err) throw err;
+
+              return done(null, newUser);
+            });
+          }
+
+        });
+
+      } else {
+
+        var user = req.user;
+
+        user.twitter.id    = profile.id;
+        user.twitter.token = token;
+        user.twitter.displayName  = profile.displayName;
+        user.twitter.username = profile.username;
+
+        user.save(function(err) {
+          if (err) throw err;
+
+          return done(null, user);
+        });
+      }
     });
   }));
 
@@ -186,7 +219,8 @@ module.exports = (passport) => {
 
     clientID        : configAuth.googleAuth.clientID,
     clientSecret    : configAuth.googleAuth.clientSecret,
-    callbackURL     : configAuth.googleAuth.callbackURL
+    callbackURL     : configAuth.googleAuth.callbackURL,
+    passReqToCallback : true
 
   },
 
@@ -194,36 +228,48 @@ module.exports = (passport) => {
 
     process.nextTick(function() {
 
-      // find the user in the database based on their google id
-      User.findOne({ 'google.id' : profile.id }, function(err, user) {
+      if (!req.user) {
 
-        // if there is an error, stop everything and return that
-        // ie an error connecting to the database
-        if (err)
-          return done(err);
+        User.findOne({ 'google.id' : profile.id }, function(err, user) {
 
-        // if the user is found, then log them in
-        if (user) {
-          return done(null, user); // user found, return that user
-        } else {
-          // if there is no user found with that google id, create them
-          var newUser = new User();
+          if (err)
+            return done(err);
 
-          // set all of the google information in our user model
-          newUser.google.id    = profile.id; // set the users google id
-          newUser.google.token = token; // we will save the token that google provides to the user
-          newUser.google.name  = profile.displayName; // look at the passport user profile to see how names are returned
-          newUser.google.email = profile.emails[0].value; // google can return multiple emails so we'll take the first
+          if (user) {
+            return done(null, user);
 
-          // save our user to the database
-          newUser.save(function(err) {
-            if (err) throw err;
+          } else {
+            var newUser = new User();
 
-            return done(null, newUser);
-          });
-        }
+            newUser.google.id    = profile.id;
+            newUser.google.token = token;
+            newUser.google.name  = profile.displayName;
+            newUser.google.email = profile.emails[0].value;
 
-      });
+            newUser.save(function(err) {
+              if (err) throw err;
+
+              return done(null, newUser);
+            });
+          }
+
+        });
+
+      } else {
+        
+        var user = req.user;
+
+        user.google.id    = profile.id;
+        user.google.token = token;
+        user.google.name  = profile.displayName;
+        user.google.email = profile.emails[0].value;
+
+        user.save(function(err) {
+          if (err) throw err;
+
+          return done(null, user);
+        });
+      }
     });
   }));
 
