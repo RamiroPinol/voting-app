@@ -9,9 +9,11 @@ module.exports = (app, passport) => {
   app.get('/login', (req, res) => {
     res.render('login.ejs', {
       message: req.flash('loginMessage'),
+      icon: "sign-in",
       action: "Login",
       alternative: "Signup",
-      text: "Need an account?"
+      text: "Need an account?",
+      linkLocal: false
     });
   });
 
@@ -24,11 +26,13 @@ module.exports = (app, passport) => {
 
   // SIGNUP PAGE
   app.get('/signup', (req, res) => {
-    res.render('signup.ejs', {
+    res.render('login.ejs', {
       message: req.flash('signupMessage'),
       action: "Signup",
       alternative: "Login",
-      text: "Already have an account?"
+      text: "Already have an account?",
+      icon: "sign-up",
+      linkLocal: false
     });
   });
 
@@ -90,7 +94,12 @@ module.exports = (app, passport) => {
 
   // LOCAL
   app.get('/connect/local', function(req, res) {
-    res.render('connect-local.ejs', { message: req.flash('loginMessage') });
+    res.render('login.ejs', {
+      message: req.flash('loginMessage'),
+      icon: "user",
+      action: "Add local account",
+      linkLocal: true
+    });
   });
 
   app.post('/connect/local', passport.authenticate('local-signup', {
