@@ -31,7 +31,7 @@ module.exports = (app, passport) => {
       action: "Signup",
       alternative: "Login",
       text: "Already have an account?",
-      icon: "sign-up",
+      icon: "sign-in",
       linkLocal: false
     });
   });
@@ -154,31 +154,19 @@ module.exports = (app, passport) => {
   });
 
   // facebook -------------------------------
-  app.get('/unlink/facebook', function(req, res) {
-      var user            = req.user;
-      user.facebook.token = undefined;
-      user.save(function(err) {
-          res.redirect('/profile');
-      });
-  });
+  app.get('/unlink/facebook', (req, res) =>{
+    unlink("facebook", req, res)
+  })
 
   // twitter --------------------------------
-  app.get('/unlink/twitter', function(req, res) {
-      var user           = req.user;
-      user.twitter.token = undefined;
-      user.save(function(err) {
-         res.redirect('/profile');
-      });
-  });
+  app.get('/unlink/twitter', (req, res) =>{
+    unlink("twitter", req, res)
+  })
 
   // google ---------------------------------
-  app.get('/unlink/google', function(req, res) {
-      var user          = req.user;
-      user.google.token = undefined;
-      user.save(function(err) {
-         res.redirect('/profile');
-      });
-  });
+  app.get('/unlink/google', (req, res) =>{
+    unlink("google", req, res)
+  })
 
 
 // LOGOUT ROUTE
@@ -193,4 +181,13 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
     return next();
   res.redirect('/');
+}
+
+// Middleware to unlink social net account
+function unlink(service, req, res) {
+  var user          = req.user;
+  user[service].token = undefined;
+  user.save(function(err) {
+     res.redirect('/profile');
+  })
 }
