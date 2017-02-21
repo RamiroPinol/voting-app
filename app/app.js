@@ -18,10 +18,6 @@ mongoose.connect(configDB.url);
 
 dotenv.config( {verbose: true} )
 
-require('./lib/passport')(passport);
-require('./routes/routes.js')(app, passport);
-//require('./lib/pollsActions');
-
 //app.set('appData', dataFile);
 //app.set('Poll', poll)
 app.set('port', process.env.PORT || 3000 );
@@ -39,6 +35,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+require('./lib/passport')(passport);
+require('./lib/pollsActions');
+require('./routes/routes.js')(app, passport);
 
 var server = app.listen(app.get('port'), () => {
   console.log('Listening on port ' + app.get('port'));

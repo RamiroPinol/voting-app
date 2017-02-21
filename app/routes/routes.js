@@ -1,3 +1,5 @@
+const pollAct = require('../lib/pollsActions');
+
 module.exports = (app, passport) => {
 
   // INDEX
@@ -49,6 +51,12 @@ module.exports = (app, passport) => {
     res.render('profile.ejs', {
       user : req.user // get the user from the session
     });
+  });
+
+  // LOGOUT ROUTE
+  app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
   });
 
 
@@ -149,32 +157,47 @@ module.exports = (app, passport) => {
       user.local.email    = undefined;
       user.local.password = undefined;
       user.save(function(err) {
-          res.redirect('/profile');
+        res.redirect('/profile');
       });
   });
 
   // facebook -------------------------------
-  app.get('/unlink/facebook', (req, res) =>{
+  app.get('/unlink/facebook', (req, res) => {
     unlink("facebook", req, res)
   })
 
   // twitter --------------------------------
-  app.get('/unlink/twitter', (req, res) =>{
+  app.get('/unlink/twitter', (req, res) => {
     unlink("twitter", req, res)
   })
 
   // google ---------------------------------
-  app.get('/unlink/google', (req, res) =>{
+  app.get('/unlink/google', (req, res) => {
     unlink("google", req, res)
   })
 
 
-// LOGOUT ROUTE
-  app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+
+// =============================================================================
+// POLLS RELATED ROUTES ========================================================
+// =============================================================================
+
+  // NEW POLL PAGE
+  app.get('/newpoll', isLoggedIn, (req, res) => {
+    res.render('newpoll.ejs')
   });
+
+
+  // PROCESS NEW POLL FORM
+  app.post('/newpoll', (req, res) => {
+    pollAct(req)
+    res.redirect('/profile');
+  });
+
 };
+// =============================================================================
+// MIDDLEWARE FUNCTIONS ========================================================
+// =============================================================================
 
 // Middleware to verify if user is logged in
 function isLoggedIn(req, res, next) {
@@ -185,9 +208,9 @@ function isLoggedIn(req, res, next) {
 
 // Middleware to unlink social net account
 function unlink(service, req, res) {
-  var user          = req.user;
+  var user = req.user;
   user[service].token = undefined;
   user.save(function(err) {
-     res.redirect('/profile');
+    res.redirect('/profile');
   })
 }
