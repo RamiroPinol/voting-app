@@ -6,7 +6,7 @@ function addOption() {
   const optionsDiv = document.querySelector(".form-options")
   const inner = `
     <label for="feedback-form-option">Option ${optionsLength + 1}</label>
-    <input type="text" class="form-control" id="feedback-form-option" placeholder="Enter option">
+    <input type="text" class="form-control" id="feedback-form-option" placeholder="Enter option" name="option${optionsLength + 1}" value="">
   `
   const elem = document.createElement("div")
 
