@@ -9,17 +9,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
 
-//const dataFile = require('./data/data.json');
-//const poll = require('./getPoll');
 const auth = require('./lib/auth');
-
 const configDB = require('./lib/database');
 mongoose.connect(configDB.url);
 
 dotenv.config( {verbose: true} )
 
-//app.set('appData', dataFile);
-//app.set('Poll', poll)
 app.set('port', process.env.PORT || 3000 );
 app.set('view engine', 'ejs');
 app.set('views', 'app/views');

@@ -1,10 +1,11 @@
 const pollAct = require('../lib/pollsActions');
+const poll = require('../lib/dbPolls');
 
 module.exports = (app, passport) => {
 
   // INDEX
   app.get('/', (req, res) => {
-    res.render('index.ejs');
+    pollAct.findAllPolls(req, res)
   });
 
   // LOGIN PAGE
@@ -190,7 +191,7 @@ module.exports = (app, passport) => {
 
   // PROCESS NEW POLL FORM
   app.post('/newpoll', (req, res) => {
-    pollAct(req)
+    pollAct.createPoll(req)
     res.redirect('/profile');
   });
 

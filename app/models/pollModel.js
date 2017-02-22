@@ -10,7 +10,8 @@ const pollSchema = mongoose.Schema({
 // Method to add an option to poll's object
 pollSchema.methods.addOption = function(option) {
   const obj = {}
-  obj[option] = 0
+  obj["option"] = option
+  obj["votes"] = 0
   return this.options.push(obj)
 }
 
