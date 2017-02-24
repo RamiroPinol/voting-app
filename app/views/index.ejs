@@ -7,17 +7,17 @@
 
   <% include blocks/navbar.ejs %>
 
-  <%= test%>
-
-  <% test.forEach( poll => { %>
-  <%  const pollName = poll.pollName %>
-  <%  const userName = poll.userId %>
-  <%  const options = poll.options %>
-  <% include blocks/poll.ejs %>
-  <%  }) %>
-
-
   <div class="container">
+
+    <div class="row">
+      <% polls.forEach( poll => { %>
+      <%  const pollName = poll.pollName %>
+      <%  const userName = poll.userId %>
+      <%  const options = poll.options %>
+      <%  const id = poll._id.toString() %>
+      <% include blocks/poll.ejs %>
+      <%  }) %>
+    </div>
 
     <div class="jumbotron text-center">
       <h1><span class="fa fa-pie-chart"></span> RP Voting App</h1>

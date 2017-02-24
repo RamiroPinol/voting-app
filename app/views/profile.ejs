@@ -7,11 +7,17 @@
 
   <% include blocks/navbar.ejs %>
 
-  <div class="container">
+  <% polls.forEach( poll => { %>
+  <%  const pollName = poll.pollName %>
+  <%  const userName = poll.userId %>
+  <%  const options = poll.options %>
+  <%  const id = poll._id.toString() %>
+  <% include blocks/poll.ejs %>
+  <%  }) %>
 
-    populate with user's polls
+<div class="container">
 
-    <div class="page-header text-center">
+<div class="page-header text-center">
   <h1><span class="fa fa-anchor"></span> Profile Page</h1>
   <a href="/logout" class="btn btn-default btn-sm">Logout</a>
 </div>

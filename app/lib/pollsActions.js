@@ -27,18 +27,21 @@ exports.findAllPolls = (req, res) => {
     Poll.find({}, (err, polls) => {
       if (err) throw err
       res.render('index', {
-        test: polls
+        polls: polls
       })
     })
   })
 }
 
 // Find polls of current logged in user
-exports.findByUser = (req) => {
+exports.findByUser = (req, res) => {
   process.nextTick( () => {
-    poll.find({ userId : req.user._id}, (err, polls) => {
+    Poll.find({ userId : req.user._id}, (err, polls) => {
       if (err) throw err
-      return polls
+      res.render('profile.ejs', {
+        polls: polls,
+        user : req.user // get the user from the session
+      });
     })
   })
 }
@@ -46,6 +49,6 @@ exports.findByUser = (req) => {
 // Delete poll
 exports.delete = (id) => {
   process.nextTick( () => {
-    poll.remove({ _id : id })
+    Poll.remove({ _id : id })
   })
 }

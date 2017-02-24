@@ -1,22 +1,27 @@
-<div class="row">
-  <div class="poolDiv .col-sx-12 .com-md-6 panel panel-primary">
+<div class="col-xs-6 col-md-3">
+  <div class="panel panel-primary">
 
-    <div class="panel-heading">
+    <div class="panel-heading" data-toggle="collapse" data-target=".panel-body">
       <p id="userName"> <%= userName %> </p>
-      <h2 id="poolName"> <%= poolName %> </h2>
+      <h2 id="pollName"> <%= pollName %> </h2>
     </div>
 
     <div class="panel-body">
-      <ul>
-      <% for(var i=0; i<options.length; i++) {%>
-      <li><%= options[i] %></li>
-      <% } %>
+      <ul class="list-group">
+      <% options.forEach( (opt, index) => { %>
+        <li class="list-group-item">
+          <div class="radio">
+						<input type="radio" class="poll-input" name="pollOption" value="<%= opt.option %>" id="<%= id.slice(-6) + index %>">
+            <label for="<%= id.slice(-6) + index %>" class="poll-label"> <%= opt.option %> </label>
+          </div>
+  			</li>
+      <% }) %>
       </ul>
     </div>
 
     <div class="panel-footer">
-      <button type="button" name="button">VOTE</button>
+      <button type="button" class="btn btn-primary btn-sm">Vote</button>
+      <a href="#">View Result</a></div>
     </div>
 
-  </div>
 </div>

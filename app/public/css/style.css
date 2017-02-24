@@ -1,16 +1,53 @@
 * {
   text-align: center;
 }
-body {
-}
+
+/* POLL STYLE */
 .panel-heading p {
   text-align: left;
   margin: 0;
 }
 
-.panel-heading h2 {
-  margin: 10px;
+#pollName {
+  margin: 5px;
 }
+
+.panel-body {
+  padding: 0 !important;
+}
+
+.list-group {
+  margin: 0 !important;
+}
+
+li {
+  padding: 0 !important;
+}
+
+.radio {
+  margin: 0 !important;
+}
+
+input {
+  display: none;
+}
+
+label {
+  height: 50px;
+  width: 100%;
+  line-height: 50px;
+}
+
+label:hover {
+  background-color: rgba(51, 122, 183, 0.3);
+}
+
+input:checked + label {
+  background-color: rgba(51, 122, 183, 0.7);
+}
+
+
+
 
 a,
 a:focus,

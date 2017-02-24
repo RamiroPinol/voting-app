@@ -49,9 +49,7 @@ module.exports = (app, passport) => {
   // USER PROFILE PAGE
   // Uses isLoggedIn middleware function to check is user is authenticated
   app.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile.ejs', {
-      user : req.user // get the user from the session
-    });
+    pollAct.findByUser(req, res)
   });
 
   // LOGOUT ROUTE
